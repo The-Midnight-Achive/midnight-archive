@@ -5,7 +5,10 @@
   export let post
 </script>
 
-<Card href={`/post/${post.slug}`} data-sveltekit-prefetch>
+<Card
+  href={`/${post.subdir.substring(0, post.subdir.length - 1)}/${post.slug}`}
+  data-sveltekit-prefetch
+>
   <slot slot="eyebrow" name="eyebrow" />
   <slot slot="title">{post.title}</slot>
   <div slot="description" class="prose dark:prose-invert">

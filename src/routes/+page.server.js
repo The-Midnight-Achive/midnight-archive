@@ -1,9 +1,8 @@
-import { posts } from '$lib/data/posts'
+import { posts } from '$lib/data/combined'
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
-    console.log(posts.component)
     return {
-        posts: posts.slice(0, 5) // Exclude `component`
+        posts: posts.slice(0, 5)
       };
 }

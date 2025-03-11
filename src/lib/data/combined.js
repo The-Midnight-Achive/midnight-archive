@@ -11,10 +11,12 @@ export const posts = Object.entries(import.meta.glob('/posts/**/*.md', { eager: 
   } }))
   .map(([filepath, post]) => {
     const preview = parse(render(post.default).body).querySelector('p');
-    console.log(preview)
 
+    console.log(filepath.split('/')[2])
     return {
       ...post.metadata,
+
+      subdir: filepath.split('/')[2],
 
       // Generate the slug from the file path
       slug: filepath
@@ -39,14 +41,28 @@ export const posts = Object.entries(import.meta.glob('/posts/**/*.md', { eager: 
       readingTime: readingTime(preview?.structuredText ?? '').text
     };
   })
+  // make sure posts are only returned if they are a date in the past
+  .filter((post) => new Date(post.date) < new Date())
   // Sort by date
   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-  // Add references to next/previous post
-  .map((post, index, allPosts) => ({
+
+export const combinedPosts = posts
+
+export const reviews = posts.filter((post) => post.subdir === 'reviews').map((post, index, allReviews) => ({
     ...post,
-    next: allPosts[index - 1] || null,
-    previous: allPosts[index + 1] || null
-  }));
+    next: allReviews[index - 1] || null,
+    previous: allReviews[index + 1] || null
+}))
+export const poems = posts.filter((post) => post.subdir === 'poems').map((post, index, allPoems) => ({
+    ...post,
+    next: allPoems[index - 1] || null,
+    previous: allPoems[index + 1] || null
+}))
+export const writings = posts.filter((post) => post.subdir === 'writings').map((post, index, allWritings) => ({
+    ...post,
+    next: allWritings[index - 1] || null,
+    previous: allWritings[index + 1] || null
+}))
 
 
 function addTimezoneOffset(date) {

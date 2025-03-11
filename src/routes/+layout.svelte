@@ -18,9 +18,10 @@
   let canvas
   let ctx
   let stars = []
-  const numStars = 100
+  let numStars
 
   function initializeStars() {
+    numStars = Math.floor(canvas.height / 10)
     stars = Array.from({ length: numStars }, () => ({
       x_offset: Math.random() * canvas.width,
       y_offset: Math.random() * canvas.height,
@@ -28,6 +29,11 @@
       vert_speed: Math.random() * 0.1 + 0.015,
       horz_speed: Math.random() * 0.2 + 0.05
     }))
+  }
+
+  function recalculateStars() {
+    // this should add or remove stars based on the current viewport
+    initializeStars()
   }
 
   function animate() {
@@ -59,6 +65,13 @@
 
   function resizeCanvas() {
     if (!browser) return
+    // return out if the window did not change meaningfully, this prevents
+    // the canvas from resizing on safari and probably other mobile browsers
+    if (
+      canvas.width === window.innerWidth &&
+      canvas.height === document.documentElement.offsetHeight
+    )
+      return
     canvas.width = window.innerWidth
     canvas.height = document.documentElement.offsetHeight
     initializeStars()
@@ -70,6 +83,11 @@
     resizeCanvas()
     animate()
     window.addEventListener('resize', resizeCanvas)
+  })
+
+  afterNavigate(() => {
+    if (!browser) return
+    resizeCanvas()
   })
 
   onDestroy(() => {
@@ -87,6 +105,11 @@
       >
         {name}
       </a>
+      <ul class="flex gap-2 text-sm font-semibold">
+        <li><a href="/poems">Poems</a></li>
+        <li><a href="/reviews">Reviews</a></li>
+        <li><a href="/writings">Writing</a></li>
+      </ul>
     </header>
     <main
       class="flex flex-col flex-grow w-full mx-auto"

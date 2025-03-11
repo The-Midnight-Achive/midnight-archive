@@ -62,8 +62,8 @@
         role="button"
         tabindex="0"
         class="items-center justify-center hidden w-10 h-10 mb-8 transition bg-white rounded-full shadow-md -top-1 -left-16 lg:flex group shadow-zinc-800/5 border border-zinc-700/50 dark:bg-zinc-800 ring-0 focus-visible:ring-2 ring-white/10 hover:border-zinc-700 hover:ring-white/20"
-        href={canGoBack ? undefined : '/posts'}
-        aria-label="Go back to posts"
+        href={canGoBack ? undefined : '/poems'}
+        aria-label="Go back to poems"
         on:click={goBack}
         on:keydown={goBack}
       >
