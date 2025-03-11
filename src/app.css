@@ -16,7 +16,7 @@
     }
 
     hr {
-        @apply border-zinc-100 dark:border-zinc-700/25;
+        @apply border-zinc-200/25 my-4 mx-10;
     }
 
     pre {

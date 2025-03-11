@@ -17,9 +17,7 @@ const config = {
   ],
 
   kit: {
-    adapter: adapter({
-        runtime: 'nodejs22.x',
-    }),
+    adapter: adapter(),
 
     // remove this if you don't want prerendering
     prerender: {
